@@ -1,0 +1,57 @@
+body {
+  background-color: #F6F1F1;
+   font-size: 25px;
+}
+.navbar {
+    position: relative;
+}
+.navbar-brand img{
+    width: 20%;
+    height: 10%;
+}
+
+.bg-light{
+    background-color: #146C94 !important;
+}
+#home-link{
+    color: white;
+    font-size: larger;
+    margin-right: 10px;
+}
+.nav-item button{
+    margin-right: 10px;
+font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-size: large;
+padding: 0px 14px;
+border-radius: 8px;
+border: none;
+}
+#navbarNav{
+    justify-content: end;
+}
+#btns{
+    margin: 20px 38% ;
+
+}
+.engBtn , .iQBtn , .tecBtn {
+
+    background-color: #146C94;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+
+}
+#quizName {
+    margin: 0 10%;
+    background-color: #AFD3E2;
+    border: 1px solid black;
+    height: 500px;
+    width: 80%;
+}
+.question {
+    width: 80%;
+    height: 200px;
+    background-color: #F6F1F1;
+    border: 1pc solid black;
+}
