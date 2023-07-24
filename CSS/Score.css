@@ -1,63 +1,14 @@
 body {
     background-color: #F6F1F1;
 }
-#RP {
-   font-size: 25px;
-   margin: 20px 20px 40px;
-}
-
-
-.bg-light{
-    background-color: #146C94 !important;
-}
-#home-link{
-    color: white;
-    font-size: larger;
-    margin-right: 10px;
-}
-
-#btns{
-    margin: 20px 35% ;
-
-}
-.engBtn , .iQBtn , .tecBtn {
-
-    background-color: #146C94;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 8px;
-    font-size: 22px;
-  padding: 15px 25px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-}
-#quizName {
-    margin: 0 10%;
-    background-color: #AFD3E2;
-    border: 1px solid black;
-    height: auto;
-    width: 80%;
-}
-.question {
-    width: 80%;
-    height: auto;
-    background-color: #F6F1F1;
-    border: none;
-    margin: 40px  auto;
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-    
-}
-
-
-
-
 
 .navbar-brand img{
     width: 20%;
     height: 10%;
 }
-
+.bg-light{
+    background-color: #146C94 !important;
+}
 
 .home-link{
     color: white;
@@ -196,4 +147,38 @@ margin-top: 20px;
         font-size: small;
      }
 
+ }
+#result {
+margin: auto;
+font-size: xx-large;
+text-align: center;
+padding: 50px;
+
+ }
+ h2 {
+      margin: 20px;
+
+ }
+ .congrats {
+    font-size: 50px;
+    color: green;
+    font-weight: bold;
+    padding: 10px;
+
+ }
+ .fail {
+    font-size: 50px;
+    color: rgb(206, 11, 11);
+    font-weight: bold;
+    padding: 10px;
+
+ }
+ #see {
+    background-color: #146C94;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin: 15px;
+    border-radius: 10px;
+    font-size: 30px;
  }

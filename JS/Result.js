@@ -1,84 +1,103 @@
-// const score = document.getElementById('score');
-// const engBtn = document.querySelector('.engBtn');
-// const iQBtn = document.querySelector('.iQBtn');
-// const tecBtn = document.querySelector('.tecBtn');
-// const quizName = document.querySelector('#quizName');
-
-// engBtn.addEventListener('click', () => {
-//   const x = new XMLHttpRequest();
-//   x.open("GET", "quiz.json");
-//   x.onload = function () {
-//     const quiz = JSON.parse(this.responseText);
-//     let engQuiz = quiz.english_quiz;
-
-//     // Clear previous content before displaying new questions
-//     quizName.innerHTML = "";
-
-//     for (let i = 0; i < engQuiz.length; i++) {
-//       let Q = document.createElement("div");
-//       Q.className = "question";
-//       Q.innerHTML = engQuiz[i].question;
-
-//       // Add options and handle user interactions here
-//       // For example, create radio buttons for options, and check the correct_answer property for the correct answer
-
-//       quizName.appendChild(Q);
-//     }
-//   };
-//   x.send();
-// });
 const score = document.getElementById('score');
 const engBtn = document.querySelector('.engBtn');
 const iQBtn = document.querySelector('.iQBtn');
 const tecBtn = document.querySelector('.tecBtn');
 const quizName = document.querySelector('#quizName');
+fetch('../quiz.json')
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error("Error while fetching the data");
+    }
+  })
+  .then((data) => {
+    quiz = data;
+    showQuiz('english_quiz');
+    calculateTotalScore();
+    score.innerHTML = `${totalScore}`;
+    
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-// Function to display the questions
-function displayQuestions(quizData) {
-  // Clear previous content before displaying new questions
-  quizName.innerHTML = "";
 
-  // Get the corresponding quiz data based on the selected button
-  const selectedQuiz = quizData[engBtn.dataset.quiz];
+  let userAnswers = JSON.parse(localStorage.getItem('Answers'));
 
-  for (let i = 0; i < selectedQuiz.length; i++) {
-    const question = selectedQuiz[i];
-    const questionElement = document.createElement("div");
-    questionElement.className = "question";
-    questionElement.innerHTML = question.question;
+  function calculateTotalScore() {
+    let totalScore = 0;
+    for (let quizType in quiz) {
+      let currentQuiz = quiz[quizType];
+      let quizScore = 0;
+  
+      for (let i = 0; i < currentQuiz.length; i++) {
+        if (userAnswers[i] === currentQuiz[i].correct_answer) {
+          quizScore++;
+        }
+      }
+  
+      // Add the quiz score to the total score
+      totalScore += quizScore;
+    }
+  
+    return totalScore;
+  }
 
-    // Add options and handle user interactions here
-    // For example, create radio buttons for options and check the correct_answer property for the correct answer
 
-    quizName.appendChild(questionElement);
+function showQuiz(quizType) {
+  quizName.innerHTML = ''; // Clear the previous quiz content
+  let currentQuiz = quiz[quizType];
+
+  for (let i = 0; i < currentQuiz.length; i++) {
+    let Q = document.createElement("div");
+    Q.innerHTML = " ";
+    Q.className = "question";
+    Q.style.padding = '30px';
+    Q.innerHTML = currentQuiz[i].question;
+
+    let options = currentQuiz[i].options;
+    for (let j = 0; j < options.length; j++) {
+      let op = document.createElement("div");
+      op.style.padding = '10px';
+      op.innerHTML = j +1  +")" + "  " +options[j];
+      let selectedOption = localStorage.getItem("Answers");
+
+      let feedback = document.createElement("span");
+
+      if (options[j] === selectedOption) {
+          feedback.innerHTML = "`<span class=material-icons-outlined> Your answer  </span>`";
+       
+      } else {
+        if (options[j] === currentQuiz[i].correct_answer) {
+          feedback.innerHTML= `&nbsp;&nbsp;&nbsp;`+`<i class="fa-solid fa-check" style="color: #2db944;"></i>` +`&nbsp;&nbsp;`;
+        } else {
+          feedback.innerHTML =`&nbsp;&nbsp;&nbsp;` + `<i class="fa-solid fa-x" style="color: #e1390e;"></i>`;
+        }
+      }
+
+      op.appendChild(feedback);
+      Q.appendChild(op);
+    }
+
+    quizName.appendChild(Q);
   }
 }
 
-// Fetch the quiz data from the JSON file
-function fetchQuizData() {
-  const x = new XMLHttpRequest();
-  x.open("GET", "quiz.json");
-  x.onload = function () {
-    const quiz = JSON.parse(this.responseText);
-
-    // Save the quiz data in the dataset of the buttons
-    engBtn.dataset.quiz = "english_quiz";
-    iQBtn.dataset.quiz = "iq_quiz";
-    tecBtn.dataset.quiz = "technical_quiz";
-
-    // Display the questions for the default selected quiz (English)
-    displayQuestions(quiz);
-  };
-  x.send();
-}
-
-// Add click event listeners to the quiz buttons
 engBtn.addEventListener('click', () => {
-  fetchQuizData();
+  showQuiz('english_quiz');
 });
+
 iQBtn.addEventListener('click', () => {
-  fetchQuizData();
+  showQuiz('iq_quiz');
 });
+
 tecBtn.addEventListener('click', () => {
-  fetchQuizData();
+  showQuiz('technical_quiz');
 });
+
+
+
+
+
+
