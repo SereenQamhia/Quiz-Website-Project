@@ -41,7 +41,7 @@ fetch('../quiz.json')
   let Tscore =calculateTotalScore();
   if (Tscore >= 10){
     Result.innerHTML = 
-    ` <img src="/check.PNG" >
+    ` <img src="../images/check.PNG" >
     <div class="congrats">Congratulation!</div>
     <div> We will arrange with you for an interview </div>
     <div> Your score is ${totalScore} out of 20 <div>
@@ -55,7 +55,7 @@ fetch('../quiz.json')
 
     else {
     Result.innerHTML = 
-    ` <img src="/fail.png" >
+    ` <img src="../images/fail.png" >
     <div class="fail">You fail the quiz</div>
     <div> Work hard and keep trying </div>
     <div> Your score is ${totalScore} out of 20 <div>
