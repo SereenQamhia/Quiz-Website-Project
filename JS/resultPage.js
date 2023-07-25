@@ -1,9 +1,12 @@
-const score = document.getElementById('score');
 const engBtn = document.querySelector('.engBtn');
 const iQBtn = document.querySelector('.iQBtn');
 const tecBtn = document.querySelector('.tecBtn');
 const quizName = document.querySelector('#quizName');
-fetch('../quiz.json')
+const score = document.querySelector('#score');
+
+const correctAnswers = []; // Define the correctAnswers array
+
+fetch('/JS/quizApp.json')
   .then((res) => {
     if (res.ok) {
       return res.json();
@@ -13,66 +16,52 @@ fetch('../quiz.json')
   })
   .then((data) => {
     quiz = data;
+    for (const category in data) {
+      if (data.hasOwnProperty(category)) {
+        const questions = data[category];
+        for (const question of questions) {
+          correctAnswers.push(question.correct_answer);
+          
+        }
+      }
+    }
     showQuiz('english_quiz');
-    calculateTotalScore();
-    score.innerHTML = `${totalScore}`;
-    
   })
   .catch((err) => {
     console.log(err);
   });
 
-
-  let userAnswers = JSON.parse(localStorage.getItem('Answers'));
-
-  function calculateTotalScore() {
-    let totalScore = 0;
-    for (let quizType in quiz) {
-      let currentQuiz = quiz[quizType];
-      let quizScore = 0;
-  
-      for (let i = 0; i < currentQuiz.length; i++) {
-        if (userAnswers[i] === currentQuiz[i].correct_answer) {
-          quizScore++;
-        }
-      }
-  
-      // Add the quiz score to the total score
-      totalScore += quizScore;
-    }
-  
-    return totalScore;
-  }
-
-
 function showQuiz(quizType) {
   quizName.innerHTML = ''; // Clear the previous quiz content
   let currentQuiz = quiz[quizType];
+  let selectedOption = JSON.parse(localStorage.getItem("Answers")) || []; // Parse the selectedOption from localStorage
 
   for (let i = 0; i < currentQuiz.length; i++) {
     let Q = document.createElement("div");
     Q.innerHTML = " ";
     Q.className = "question";
     Q.style.padding = '30px';
-    Q.innerHTML = currentQuiz[i].question;
+    Q.innerHTML = `${i + 1}) ${currentQuiz[i].question}`;
 
     let options = currentQuiz[i].options;
     for (let j = 0; j < options.length; j++) {
       let op = document.createElement("div");
       op.style.padding = '10px';
-      op.innerHTML = j +1  +")" + "  " +options[j];
-      let selectedOption = localStorage.getItem("Answers");
+      op.innerHTML = j + 1 + ")" + "  " + options[j];
 
       let feedback = document.createElement("span");
 
-      if (options[j] === selectedOption) {
-          feedback.innerHTML = `<span class=material-icons-outlined> Your answer  </span>`;
-       
+      if (selectedOption[i] === options[j]) {
+        if (selectedOption[i] === currentQuiz[i].correct_answer) {
+          feedback.innerHTML = `&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check" style="color: #2db944;"></i>&nbsp;&nbsp;<span class="material-icons-outlined"> Your answer </span>`;
+        } else {
+          feedback.innerHTML = `&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-x" style="color: #e1390e;"></i>&nbsp;&nbsp;<span class="material-icons-outlined"> Your answer </span>`;
+        }
       } else {
         if (options[j] === currentQuiz[i].correct_answer) {
-          feedback.innerHTML= `&nbsp;&nbsp;&nbsp;`+`<i class="fa-solid fa-check" style="color: #2db944;"></i>` +`&nbsp;&nbsp;`;
+          feedback.innerHTML = `&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-check" style="color: #2db944;"></i>`;
         } else {
-          feedback.innerHTML =`&nbsp;&nbsp;&nbsp;` + `<i class="fa-solid fa-x" style="color: #e1390e;"></i>`;
+          feedback.innerHTML = `&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-x" style="color: #e1390e;"></i>`;
         }
       }
 
@@ -96,8 +85,4 @@ tecBtn.addEventListener('click', () => {
   showQuiz('technical_quiz');
 });
 
-
-
-
-
-
+score.innerHTML = localStorage.getItem("userScore");

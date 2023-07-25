@@ -76,6 +76,42 @@ text-align: center;
 color: white;
 padding: 10px;
 }
+
+#result {
+    margin: auto;
+    font-size: xx-large;
+    text-align: center;
+    padding: 50px;
+    
+     }
+     h2 {
+          margin: 20px;
+    
+     }
+     .congrats {
+        font-size: 50px;
+        color: green;
+        font-weight: bold;
+        padding: 10px;
+    
+     }
+     .fail {
+        font-size: 50px;
+        color: rgb(206, 11, 11);
+        font-weight: bold;
+        padding: 10px;
+    
+     }
+     #see {
+        background-color: #146C94;
+        border: none;
+        color: white;
+        padding: 10px;
+        margin: 15px;
+        border-radius: 10px;
+        font-size: 30px;
+     }
+
 @media screen and (min-width:481px) and (max-width:768px) {
     .footer {
       grid-template-columns: auto auto; 
@@ -84,9 +120,7 @@ padding: 10px;
     .cont{
         margin-bottom: 20px;
     }
-    .navbar-nav{
-        flex-direction: row;
-    }
+
   
     .text{
         margin-bottom: 50px;
@@ -105,13 +139,15 @@ padding: 10px;
  .copy{
     font-size: medium;
  }
+
+
  }
  @media screen and (max-width:480px) {
       .navbar-nav{
           flex-direction: row;
       }
       .navbar-brand img {
-        width: 60%;
+        width: 45%;
         height: 60%;
     }
       .box{
@@ -146,39 +182,16 @@ margin-top: 20px;
      .copy{
         font-size: small;
      }
-
- }
 #result {
-margin: auto;
-font-size: xx-large;
-text-align: center;
-padding: 50px;
-
- }
- h2 {
-      margin: 20px;
-
- }
- .congrats {
-    font-size: 50px;
-    color: green;
-    font-weight: bold;
-    padding: 10px;
-
- }
- .fail {
-    font-size: 50px;
-    color: rgb(206, 11, 11);
-    font-weight: bold;
-    padding: 10px;
-
- }
- #see {
-    background-color: #146C94;
-    border: none;
-    color: white;
-    padding: 10px;
-    margin: 15px;
-    border-radius: 10px;
-    font-size: 30px;
+    font-size: x-large;
+    
+     }
+     .fail {
+        font-size: 45px;
+       
+     }
+     #see {
+        margin: 20px;
+        font-size: 25px;
+     }
  }

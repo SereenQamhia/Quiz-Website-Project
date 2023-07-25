@@ -17,8 +17,8 @@ body {
 }
 
 #btns{
-    margin: 20px 35% ;
-
+    display: flex;
+    justify-content: center;
 }
 .engBtn , .iQBtn , .tecBtn {
 
@@ -28,16 +28,18 @@ body {
     border-radius: 5px;
     margin: 8px;
     font-size: 22px;
-  padding: 15px 25px; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px 25px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 150px;
 
 }
 #quizName {
-    margin: 0 10%;
+    margin: 30px auto;
     background-color: #AFD3E2;
     border: 1px solid black;
-    height: auto;
+    padding: 10px;
     width: 80%;
+    border-radius: 8px;
 }
 .question {
     width: 80%;
@@ -46,11 +48,23 @@ body {
     border: none;
     margin: 40px  auto;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-    
+    border-radius: 8px;
 }
 
+#totalScore {
+    position: relative;
+    width: fit-content;
+}
 
+#totalScore::before {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: calc(100% - 80px);
+    background-color: #146C94;
+    bottom: 20px;
 
+}
 
 
 .navbar-brand img{
@@ -125,6 +139,8 @@ text-align: center;
 color: white;
 padding: 10px;
 }
+
+
 @media screen and (min-width:481px) and (max-width:768px) {
     .footer {
       grid-template-columns: auto auto; 
@@ -196,4 +212,27 @@ margin-top: 20px;
         font-size: small;
      }
 
+     #RP {
+        font-size: 25px;
+        margin: 10px ;
+     }
+     #quizName {
+        margin: 0px;
+        padding: 10px;
+        width: 100%;
+
+    }
+    .engBtn , .iQBtn , .tecBtn {
+       
+        margin: 10px 5px;
+        font-size: 25px;
+        padding: 5px ; 
+       
+    }
+    .question {
+        width: 95%;
+        margin: 20px 10px;
+        font-size: 20px;
+    }
  }
+

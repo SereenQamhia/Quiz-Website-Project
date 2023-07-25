@@ -61,8 +61,8 @@
       },
       {
         "question": "Which HTML tag is used for creating a hyperlink?",
-        "options": ["<link>", "<a>", "<hyperlink>", "<url>"],
-        "correct_answer": "<a>"
+        "options": ["link", "a", "hyperlink", "url"],
+        "correct_answer": "a"
       },
       {
         "question": "In JavaScript, what is the purpose of the 'setTimeout()' function?",
