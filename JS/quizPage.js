@@ -19,11 +19,75 @@ let quizTypeIndex = 0; // Index to keep track of the current quiz type
 let questionIndex = 0; // Index to keep track of the current question
 let quizzes = {};
 let answers = [];
+let userIndex;
 let fixedAlerts = document.getElementById("fixed");
 let fixedREADY = document.getElementById("READY");
 let sure = true;
 let quizResult;
 const quizTime = 20;
+
+
+
+// mohammad start
+
+
+for(let i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].isLoggedIn === true) {
+        loggedInUser = allUsers[i];
+        logoutCont.style.display = "block"
+        loginCont.style.display = "none";
+        registerCont.style.display = "none";
+        headerUserName.style.display = "inline";
+        headerUserName.textContent = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+        userIndex=i;
+        break;
+    }
+}
+
+
+
+logoutBtn.onclick = () => {
+    for (let i = 0; i < allUsers.length; i++) {
+        allUsers[i].isLoggedIn = false;     
+    }
+    localStorage.setItem("usersInfo", JSON.stringify(allUsers));
+    window.location.href = "/HTML/homepage.html";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// mohammad end
+
+
+
+
+
+
+
+
+
 
 
 fetch(`/JS/quizApp.json`)
@@ -43,12 +107,54 @@ fetch(`/JS/quizApp.json`)
         console.log(err);
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 
+
     window.onload = () => {
         // Check if there is a saved quiz state in session storage
         const savedQuestionIndex = sessionStorage.getItem("currentQuestionIndex");
         const savedQuizIndex = sessionStorage.getItem("currentQuizIndex");
         const savedAnswers = JSON.parse(sessionStorage.getItem("tempAnswers"));
-    
+        
+        if (savedQuestionIndex == null && savedQuizIndex == null) {
+            fixedAlerts.style.display = "flex";
+            document.body.style.overflow = "hidden";
+        }else{
+            startCountdown();
+        }
+
+        let quizTitle = document.getElementById("quizTitle");
+        if (savedQuizIndex==1) {
+            quizTitle.textContent = 'IQ Quiz';
+            quizTypeImage.src = '/Images/IQTest.svg'
+        }
+        if (savedQuizIndex==2) {
+            quizTitle.textContent = 'Technical Quiz';
+            quizTypeImage.src = `/Images/techSkills.svg`
+        }
+        
+
+
+
+
+
+
+
+
+
+
         if (savedQuestionIndex !== null && savedQuizIndex !== null) {
             // Restore the current quiz state
             questionIndex = parseInt(savedQuestionIndex);
@@ -60,8 +166,33 @@ fetch(`/JS/quizApp.json`)
             showQuiz(quizzes, quizNames[quizTypeIndex], questionIndex);
         }
 
+
         localStorage.setItem("Answers", sessionStorage.getItem("tempAnswers"));
     };
+
+// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function showQuiz(quizData, quizType, index) {
 
@@ -79,6 +210,7 @@ function showQuiz(quizData, quizType, index) {
     </div>
     
 `;
+
 
     let options = document.querySelectorAll(".quizContent .quizAnswers button");
 
@@ -102,7 +234,15 @@ function showQuiz(quizData, quizType, index) {
 }
 
 
-nextBtn.style.display = "none";
+
+
+
+
+
+
+
+
+
 fixedAlerts.innerHTML = `
 <div>
 <img src="/Images/EnglishFixed.svg" alt="">
@@ -114,18 +254,52 @@ fixedAlerts.innerHTML = `
 </div>
 `;
 
+function fixedBTN() {
+    document.body.style.overflow = "scroll";
+    fixedAlerts.style.display = "none";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById("READY").addEventListener("click", () => {
     startCountdown();
 })
 
-function fixedBTN() {
-    fixedAlerts.style.display = "none";
-    nextBtn.style.display = "block";
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function nextQuestion() {
     let warningMsg = document.createElement("span");
-    warningMsg.style = "position: absolute; font-size: 20px";
+    warningMsg.id="warningMsg"
+    warningMsg.style = "position: absolute;";
     // Handle next click
     nextBtn.addEventListener("click", () => {
         let quizTitle = document.getElementById("quizTitle");
@@ -194,10 +368,10 @@ function nextQuestion() {
                     </div>
                     </div>
                     `;
-
-                fixedAlerts.style.display = "flex";
-                nextBtn.style.display = "none";
-
+                    if( progressWidth == 20 ){
+                        fixedAlerts.style.display = "flex";
+                        document.body.style.overflow = "hidden";
+                    }
                 quizTitle.textContent = 'IQ Quiz';
                 quizTypeImage.src = '/Images/IQTest.svg'
 
@@ -205,6 +379,7 @@ function nextQuestion() {
 
             }
             else if (quizTypeIndex === 2 && sure == true) {
+                
                 fixedAlerts.innerHTML = `
                     <div>
                     <img src="/Images/TechnicalFixed.svg" alt="">
@@ -215,18 +390,27 @@ function nextQuestion() {
                     </div>
                     </div>
                     `;
+                
 
                 quizTitle.textContent = 'Technical Quiz';
                 quizTypeImage.src = `/Images/techSkills.svg`
-
-                fixedAlerts.style.display = "flex";
-                nextBtn.style.display = "none";
-
+                if( progressWidth == 10 ){
+                    fixedAlerts.style.display = "flex";
+                    document.body.style.overflow = "hidden";
+                }
                 sure = false;
             }
 
             showQuiz(quizzes, quizNames[quizTypeIndex], questionIndex);
         }
+
+
+
+
+
+
+
+
 
         else {
             warningMsg.textContent = 'Please choose one of the options';
@@ -235,6 +419,45 @@ function nextQuestion() {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log(allUsers[userIndex]);
+
+
+
+
+
 
 nextQuestion();
 
@@ -282,7 +505,14 @@ function startCountdown() {
 // startCountdown();
 
 function submitAnswers() {
-    localStorage.setItem("Answers", JSON.stringify(answers));
+    let tempAnswers = JSON.parse(sessionStorage.getItem("tempAnswers"));
+        if (tempAnswers == null) {
+            tempAnswers = ["user didn't answer any question"];
+        }
+        allUsers[userIndex].userAnswers=tempAnswers;
+
+        localStorage.setItem("usersInfo", JSON.stringify(allUsers));
+        // localStorage.setItem("Answers", JSON.stringify(answers));
 }
 
 function setProgressFill() {
